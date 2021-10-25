@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zadanie rekrutacyjne - Popup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+/* ----------HOME---------- */
+        .wrapper {
+            max-width: 600px;            
+            min-width: 280px;
+            height: 600px;
+            background-color: #80B0B4;
+            font-family: 'Open Sans';
+            color: #3A3A3A;
+            margin: 3% auto;
+            
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        /* --------HEADLINE----------- */
+        div.headline {
+            text-transform: uppercase;
+            text-align: center;
+            padding: 0 2.5%;
+        }
+        h1 {
+            font-size: 50px;
+            line-height: 80px;
+            font-weight: normal;
+        }
+        p {
+            font-size: 30px;
+        }
+        div.headline span {
+            color: #185B61;
+        }
+        /* --------FORM----------- */
+        div.form {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 0 4%;
+        }
+        input[type=text] {
+            font-size: 30px;
+            background-color: transparent;
+            border: none;
+            border-bottom: 2px solid  #185B61;
+            font-family: "Open Sans";
+        }
+        ::placeholder {
+            color: #185B61;
+        }
+        input.email {
+            width: 260px;
+        }
+        input.name {
+            width: 180px;
+        }
+        label.checkbox-label {
+            display: block;
+            position: relative;
+            cursor: pointer;
+            text-align: justify;            
+            padding-left: 10%;
+            margin-top: 5%;
+        }
+        label.checkbox-label p {
+            font-size: 14px;
+        }
+        input[type=checkbox] {
+            visibility: hidden;
+        }
+        .box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 40px;
+            width: 40px;
+            background-color: #80B0B4;
+            border: 3px solid #185B61;
+        }
+        .box:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        .checkbox-label input:checked ~ .box:after {
+            display: block;
+        }
+        .checkbox-label .box:after {
+            left: calc(50% - 4px);
+            top: calc(50% - 14px);
+            width: 8px;
+            height: 16px;
+            border: solid #185B61;
+            border-width: 0 2px 2px 0;
+            -webkit-transform: rotate(45deg) scale(2);
+            -ms-transform: rotate(45deg) scale(2);
+            transform: rotate(45deg) scale(2);
+        }
+        div.btn {
+            text-align: center;
+        }
+        input[type=submit] {
+            background-color: #185B61;
+            color: white;
+            font-size: 40px;
+            line-height: 60px;
+            border: none;
+            cursor: pointer;
+            font-family: "Open Sans";
+            padding: 0 10%;
+            margin: 3% 0;
+        }
+/* ----popUp - thank you page---------- */
+        div.popUp {
+            display: none;
+
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 2% 2%;
+        }
+        div.popUp h1 {
+            margin: 15% 0;
+        }
+        div.popUp.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+        }
+
+/* -------------MEDIA-------------------------- */
+@media (max-width:480px) {
+    h1 {
+        font-size: 40px;
+        line-height: 70px;
+        font-weight: normal;
+    }
+    p {
+        font-size: 25px;
+    }
+    input[type=text] {
+        font-size: 25px;
+    }
+    label.checkbox-label p {
+        font-size: 10px;
+    }
+    .box {
+            height: 20px;
+            width: 20px;
+            border-width: 2px;
+        }
+    .checkbox-label .box:after {
+        -webkit-transform: rotate(45deg) scale(1);
+        -ms-transform: rotate(45deg) scale(1);
+        transform: rotate(45deg) scale(1);
+    }
+    input[type=submit] {
+        font-size: 30px;
+        line-height: 50px;
+    }
+}
+    </style>
+
+</head>
+<body>
+    <div class="wrapper">
+        <div class="headline">
+            <h1 >Witaj!</h1>
+            <p>Wypełnij formularz i zgarnij <span>kupon rabatowy</span> do wykorzystania przy najbliższych zakupach</p>            
+        </div>
+        <div class="form">        
+            <input class="email" type="text" placeholder="EMAIL" name="email" required>
+            <input id="name" class="name" type="text" placeholder="IMIĘ" name="name" required>        
+            <label class="checkbox-label">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit facilis cum quae blanditiis, natus architecto sapiente tenetur iusto nobis repudiandae enim soluta eligendi quaerat ea facere molestiae aspernatur ipsam officiis!
+                </p>
+                <input type="checkbox" checked="checked" name="subscribe">
+                <span class="box"></span>
+            </label>
+            
+        </div>
+        <div class="btn">
+        <input class="send" type="submit" value="wyślij">            
+        </div>
+
+    </div>
+    <div class="wrapper popUp">
+           <h1>Dziękujemy <span id="newName">imię</span>!</h1>
+           <p>Za wypełnienie formularza, kod rabatowy czeka na ciebie na twojej skrzynce mailowej</p>
+    </div>
+
+<script>
+const btn = document.querySelector("input.send");
+const popUp = document.querySelector("div.popUp");
+btn.addEventListener('click', function () {
+    popUp.classList.add('active');
+    document.getElementById('newName').innerHTML = document.getElementById('name').value;
+})
+</script>
+
+</body>
+</html>
